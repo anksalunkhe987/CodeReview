@@ -29,7 +29,7 @@
 output application/json
 ---
 {
-	"ankit":"salunkhe"
+	"name":"ankit"
 }]]></ee:set-payload>
 				</ee:message>
 			</ee:transform>
