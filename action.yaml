@@ -1,16 +1,20 @@
-# action.yml
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'XML Lint'
+description: 'Lint XML files with xmllint'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  xml-file:
+    description: 'The source (.xml) file'
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  xml-schema-file:
+    description: 'The schema file (.xsd or other, according to schema type)'
+    required: true
+  xml-schema-type:
+    description: 'the type of schema to use (schema, relaxng, schematron; default is schema)'
+    required: false
+    default: "schema"
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.who-to-greet }}
+    - ${{ inputs.xml-file }}
+    - ${{ inputs.xml-schema-type }}
+    - ${{ inputs.xml-schema-file }}
