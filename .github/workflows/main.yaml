@@ -17,4 +17,4 @@ jobs:
       
       - name: Code review
         uses: ./ # Uses an action in the root directory
-        id: code review
+        id: codereview
