@@ -16,5 +16,5 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.xml-file }}
-    - ${{ inputs.xml-schema-type }}
-    - ${{ inputs.xml-schema-file }}
+    - schematron
+    - mule-flow.sch
