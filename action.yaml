@@ -16,5 +16,5 @@ runs:
   image: 'Dockerfile'
   args:
     - sumup-purchase-orders-sps-sapi/src/main/mule/sumup-purchase-orders-sps-sapi.xml
-    - .github/workflows/mule-flow.sch
     - schematron
+    - .github/workflows/mule-flow.sch
