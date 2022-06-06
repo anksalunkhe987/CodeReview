@@ -33,4 +33,4 @@ jobs:
         uses: ./codeReview/ # Uses an action in the root directory
         id: review
         with : 
-          xml-file : ${{ steps.changed-files.outputs.all_modified_files }}
+          xml-file : ${{ steps.project-name.outputs.projectName }}/src/main/mule/*.xml
