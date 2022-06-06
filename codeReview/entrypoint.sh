@@ -1,3 +1,3 @@
 #!/bin/sh -l
 
-xmllint ./sumup-purchase-orders-sps-sapi/pom.xml
+xmllint --schematron mule-flow.sch ./sumup-purchase-orders-sps-sapi/src/main/mule/flows/*.xml 
