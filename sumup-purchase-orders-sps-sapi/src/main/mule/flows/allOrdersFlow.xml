@@ -19,7 +19,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 			<http:headers ><![CDATA[#[output application/java
 ---
 {
-	"Authorization" : "Bearer" ++ " " ++ vars.token1
+	"Authorization" : "Bearer" ++ " " ++ vars.token
 }]]]></http:headers>
 		</http:request>
 		<json-logger:logger doc:name="After SPS Call" doc:id="55d3a3fa-571e-474c-adf7-83179cac4216" config-ref="JSON_Logger_Config" message="After Calling SPS Get All Orders API" tracePoint="AFTER_REQUEST"/>
