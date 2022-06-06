@@ -16,4 +16,4 @@ runs:
   args:
     - sumup-purchase-orders-sps-sapi/src/main/mule/sumup-purchase-orders-sps-sapi.xml
     - schematron
-    - mule-flow.sch
+    - ./codeReview/mule-flow.sch
