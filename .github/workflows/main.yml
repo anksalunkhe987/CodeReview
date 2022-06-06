@@ -13,6 +13,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v11.5
+        with:
+          separator: ","
+          files: |
+            ^sumup(-\w+)+-sapi\/
+      
+      - name: Get project name
+        id: project-name
+        run: |
+          project_name=$(echo "${{ steps.changed-files.outputs.all_modified_files }}" | cut -d '/' -f 1 | xargs)
+          echo "::set-output name=projectName::$project_name"
+      
       - name: Code reiew
         uses: ./codeReview/ # Uses an action in the root directory
         id: review
