@@ -4,16 +4,10 @@ inputs:
   xml-file:
     description: 'The source (.xml) file'
     required: true
-  xml-schema-file:
-    description: 'The schema file (.xsd or other, according to schema type)'
-    required: true
-  xml-schema-type:
-    description: 'the type of schema to use (schema, relaxng, schematron; default is schema)'
-    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - sumup-purchase-orders-sps-sapi/src/main/mule/sumup-purchase-orders-sps-sapi.xml
+    - ${{ inputs.xml-file }}
     - schematron
     - ./codeReview/mule-flow.sch
