@@ -30,7 +30,7 @@ jobs:
           echo "::set-output name=projectName::$project_name"
       
       - name: Code reiew of Gloabl Config Mule XML
-        if: contains(${{ steps.changed-files.outputs.all_modified_files }}, '/src/main/mule/globals')
+        if: contains(${{ steps.changed-files.outputs.all_modified_files }}, '/src/main/mule/globals/config.xml')
         uses: ./codeReview/
         id: reviewGloablConfigXML
         with : 
