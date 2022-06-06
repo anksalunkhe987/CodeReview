@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Code review
 
 on:
   workflow_dispatch:
@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag codereview
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Code reiew
+        uses: ./ # Uses an action in the root directory
+        id: review
