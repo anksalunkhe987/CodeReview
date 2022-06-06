@@ -14,28 +14,4 @@
 		<apikit:router doc:name="APIkit Router" doc:id="ef7862ca-a0d1-4c69-9e4c-0672d8deea5c" config-ref="sumup-purchase-orders-sapi-config"/>
 		<error-handler ref="globalErrorHandlerApiKit" />
     </flow>
-	<flow name="sumup-purchase-orders-sps-sapiFlow" doc:id="d2e06488-8768-4bfc-9e37-e3f9f5cf956b" >
-		<ee:transform doc:name="Transform Message" doc:id="d517d8a7-fe4f-4c60-bc08-405fbe965e92" >
-			<ee:message >
-				<ee:set-payload resource="dwl/test.dwl" />
-			</ee:message>
-		</ee:transform>
-	</flow>
-	<flow name="sumup-purchase-orders-sps-sapiFlow1" doc:id="11a4686a-66bd-4e9a-8c06-f283dd5c587c" >
-		<try doc:name="Try" doc:id="7c3a01db-1e56-4b7b-a3f7-b028338c14c9" >
-			<ee:transform doc:name="Transform Message" doc:id="e0f8c3e0-9485-460c-b00c-5d2ee1c533df" >
-				<ee:message >
-					<ee:set-payload ><![CDATA[%dw 2.0
-output application/json
----
-{
-	"ankit":"salunkhe"
-}]]></ee:set-payload>
-				</ee:message>
-			</ee:transform>
-		</try>
-	</flow>
-	<flow name="sumup-purchase-orders-sps-sapiFlow2" doc:id="bb3efdab-f24b-43c9-afea-e8158417c83f" >
-		<set-payload value="#[test]" doc:name="Set Payload" doc:id="8746bd1c-fd7e-4e97-b732-e8ee5d23a9b1" />
-	</flow>
 </mule>
