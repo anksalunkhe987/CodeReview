@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:crypto="http://www.mulesoft.org/schema/mule/crypto" xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:salesforce-composite="http://www.mulesoft.org/schema/mule/salesforce-composite" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation=" http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd  http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd  http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd  http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/salesforce-composite http://www.mulesoft.org/schema/mule/salesforce-composite/current/mule-salesforce-composite.xsd http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd
+http://www.mulesoft.org/schema/mule/crypto http://www.mulesoft.org/schema/mule/crypto/current/mule-crypto.xsd">
+    <configuration-properties doc:name="Configuration properties" doc:id="c0017ccd-3297-4187-84d4-642c8da860b2" file="properties/${env}.yaml" />
+	<api-gateway:autodiscovery apiId="${api.key}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="9c21028e-f8c1-4a91-85df-c99b594a5cca" flowRef="sumup-purchase-orders-sps-sapi-main:privateFlow" />
+    <secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="dfa105cc-9130-4f8d-a7f9-fffc574e7a78" file="properties/${env}.yaml" key="${secureKey}">
+		<secure-properties:encrypt algorithm="Blowfish" />
+    </secure-properties:config>
+    <http:listener-config name="sumup-salesforce-sapi-httpListenerConfig">
+        <http:listener-connection host="${https.listen.host}" port="${https.listen.port}" protocol="HTTPS" connectionIdleTimeout="300000">
+            <tls:context>
+                <tls:trust-store insecure="true" />
+                <tls:key-store type="pkcs12" path="${https.keystore.path}" keyPassword="${secure::https.keystore.password}" password="${secure::https.keystore.password}" />
+            </tls:context>
+        </http:listener-connection>
+    </http:listener-config>
+    <configuration doc:name="Configuration" doc:id="e76ab9cc-48ee-407a-bdbe-6f3879bdfd78" defaultErrorHandler-ref="globalErrorHandlerApiKit" />
+    <os:object-store name="Object_store" doc:name="Object_store" doc:id="2f5d1b3e-5624-4cc2-b714-f9499f7281e0" maxEntries="${cache.entry.maxEntries}" entryTtl="${cache.entry.ttl}" expirationIntervalUnit="DAYS" />
+	<json-logger:config name="JSON_Logger_Config" doc:name="JSON Logger Config" doc:id="a1d1eecd-98ea-4001-9333-f74b8a450e8a" environment="${env}" disabledFields="${json.logger.disabledFields}" contentFieldsDataMasking="${json.logger.contentDataMasking}"/>
+	<configuration-properties doc:name="Configuration properties" doc:id="1410a2ff-6d2f-44f6-bf8b-681fd0e72e20" file="properties/global.yaml" />
+	<global-property doc:name="Global Property" doc:id="af22e8e7-a712-4d55-bb6e-4ab3a2d786c5" name="env" value="local" />
+	<global-property doc:name="Global Property" doc:id="14341fed-4e8b-4db7-838c-edebade7873d" name="secureKey" value="c1TqB5XQ" />
+	<global-property doc:name="Global Property" doc:id="0b7fcad4-b141-4e90-809d-cd4355921716" name="sumup.common.config.salesforce.env" value="sandbox" />
+	<http:request-config name="HTTP_Request_configuration_SPS_Auth" doc:name="HTTP Request configuration" doc:id="ffdbd3d5-3290-44ad-bf97-418eef0adae5" doc:description="This is a configuration element for SPS Auth Endpoint to get a token." responseTimeout="${sps.auth.response.timeout}">
+		<http:request-connection protocol="${sps.auth.protocol}" host="${sps.auth.host}" connectionIdleTimeout="${sps.auth.connection.idle.timeout}"/>
+	</http:request-config>
+	<http:request-config name="HTTP_Request_configuration_SPS_Api" doc:name="HTTP Request configuration" doc:id="e5129f56-bf37-4ae3-922b-96fe54d07426" basePath="${sps.api.basepath}" doc:description="This is a configuration element for SPS API Endpoint" responseTimeout="${sps.api.response.timeout}">
+		<http:request-connection protocol="${sps.api.protocol}" host="${sps.api.host}" connectionIdleTimeout="${sps.api.connection.idle.timeout}"/>
+	</http:request-config>
+</mule>
