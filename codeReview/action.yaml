@@ -10,7 +10,6 @@ inputs:
   xml-schema-type:
     description: 'the type of schema to use (schema, relaxng, schematron; default is schema)'
     required: false
-    default: "schema"
 runs:
   using: 'docker'
   image: 'Dockerfile'
