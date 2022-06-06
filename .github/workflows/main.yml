@@ -30,7 +30,7 @@ jobs:
           echo "::set-output name=projectName::$project_name"
       
       - name: Code reiew of main Mule XML
-        if: contains('/sumup-purchase-orders-sps-sapi/src/main/mule/sumup-purchase-orders-sps-sapi.xml', '/src/main/mule/')
+        if: contains(${{ steps.changed-files.outputs.all_modified_files }}, '/src/main/mule/')
         uses: ./codeReview/ # Uses an action in the root directory
         id: reviewMainXML
         with : 
