@@ -16,3 +16,5 @@ jobs:
       - name: Code reiew
         uses: ./codeReview/ # Uses an action in the root directory
         id: review
+        with : 
+          xml-file : ./sumup-purchase-orders-sps-sapi/src/main/mule/sumup-purchase-orders-sps-sapi.xml
