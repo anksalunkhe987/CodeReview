@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns:os="http://www.mulesoft.org/schema/mule/os"
+	xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:salesforce-composite="http://www.mulesoft.org/schema/mule/salesforce-composite" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce-composite http://www.mulesoft.org/schema/mule/salesforce-composite/current/mule-salesforce-composite.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="get:\allOrders:sumup-purchase-orders-sapi-config" doc:id="89514fbe-c291-447c-b3e6-cef4914cbf15" >
+		<json-logger:logger doc:name="Start" doc:id="2aef4e3a-2b86-4718-8884-5daff6ac8cbf" config-ref="JSON_Logger_Config" message="Start">
+			<json-logger:content ><![CDATA[Content]]></json-logger:content>
+		</json-logger:logger>
+		<flow-ref doc:name="Get Token" doc:id="aecfac32-da7a-4d03-9d3c-deb48262d833" name="GetToken"/>
+		<http:request method="${sps.api.method}" doc:name="Request" doc:id="08fecc4a-34f8-4358-855a-796d1124ab0b" config-ref="HTTP_Request_configuration_SPS_Api" path="${sps.api.path}">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Authorization" : "Bearer" ++ " " ++ vars.token
+}]]]></http:headers>
+		</http:request>
+		<json-logger:logger doc:name="After SPS Call" doc:id="55d3a3fa-571e-474c-adf7-83179cac4216" config-ref="JSON_Logger_Config" message="After Calling SPS Get All Orders API" tracePoint="AFTER_REQUEST"/>
+		<ee:transform doc:name="Transform Message" doc:id="2db2b926-3e80-413e-9a77-b08cedcaef2f" >
+			<ee:message >
+				<ee:set-payload resource="dwl/set-payload-allOrders.dwl" />
+			</ee:message>
+		</ee:transform>
+		<json-logger:logger doc:name="End" doc:id="c1b3372d-34d4-4e09-83e5-784593efbda4" config-ref="JSON_Logger_Config" message="End" tracePoint="END"/>
+	</flow>
+</mule>

@@ -1,0 +1,53 @@
+{
+  "configs": [
+    "utils/cacheFlow.xml",
+    "ping/ping.xml",
+    "flows/allOrdersFlow.xml",
+    "globals/globalErrorHandler.xml",
+    "globals/config.xml",
+    "sumup-purchase-orders-sps-sapi.xml",
+    "flows/orderFlow.xml",
+    "utils/responseValidationFlow.xml"
+  ],
+  "secureProperties": [
+    "anypoint.platform.client_id",
+    "anypoint.platform.client_secret",
+    "https.keystore.password",
+    "secureKey",
+    "com.sumup.mulesoft.common.config.salesforce.secure.key"
+  ],
+  "redeploymentEnabled": true,
+  "name": "3250a64b-b521-48da-8636-e0bfd4fb3162:sumup-purchase-orders-sps-sapi:1.0.0",
+  "minMuleVersion": "4.3.0",
+  "requiredProduct": "MULE_EE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedPackages": [],
+      "exportedResources": [
+        "log4j2.xml",
+        "globals/globalErrorHandler.xml",
+        "globals/config.xml",
+        "ping/ping.xml",
+        "application-types.xml",
+        "utils/responseValidationFlow.xml",
+        "utils/cacheFlow.xml",
+        "sumup-purchase-orders-sps-sapi.xml",
+        "dwl/set-payload-allOrders.dwl",
+        "keystores/prod.p12",
+        "keystores/localhost.p12",
+        "keystores/dev.p12",
+        "properties/sandbox.yaml",
+        "properties/global.yaml",
+        "properties/local.yaml",
+        "properties/prod.yaml",
+        "flows/orderFlow.xml",
+        "flows/allOrdersFlow.xml"
+      ]
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  }
+}

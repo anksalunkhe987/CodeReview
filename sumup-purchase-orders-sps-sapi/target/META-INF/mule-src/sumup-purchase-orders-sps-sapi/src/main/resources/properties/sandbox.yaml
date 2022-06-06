@@ -1,0 +1,29 @@
+### JSON Logger configuration ###
+
+json:
+  logger:
+    disabledFields: "content" #Indicate which fields to be completely removed
+    contentDataMasking : "" #Indiate which fields to be masked as hidden
+
+api:
+  key: "1290426" # replace with read API Id once added to API manager
+
+https:
+  keystore:
+    path: "keystores/dev.p12"
+    password: "![WOLprZ0Eu/jSnZ9V/G1/Uw==]"
+ 
+cache:    
+  entry:
+    ttl: "30"
+    maxEntries: "10"
+  default:
+      value: "NOT_CACHED"
+
+disable: 
+  validations: "true"
+
+
+# hashing details to encrypt cached data
+hash:
+  key: "![M2TaEy5LfMogS/aoOin+lGvxkUXqFcTlvuiKxlFsUiMwfdV1oxCT2G0/Gk/mqg6YgYyQkj+0j0Vn3cYrVEY8AWoIx9nTcvqq]"  

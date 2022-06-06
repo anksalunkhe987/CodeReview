@@ -1,0 +1,20 @@
+### JSON Logger configuration ###
+
+# [DO NOT EDIT] To be replaced by Maven build
+json:
+  logger:
+    application:
+      name: "${project.artifactId}"
+      version: "${project.version}"
+
+https:
+  listen:
+    host: "0.0.0.0"
+    port: "8082"
+
+api:
+  basepath: "/api/v1"
+
+# hashing details to encrypt cached data
+hash:
+  algorithm: "PBEWithHmacSHA256AndAES_128"

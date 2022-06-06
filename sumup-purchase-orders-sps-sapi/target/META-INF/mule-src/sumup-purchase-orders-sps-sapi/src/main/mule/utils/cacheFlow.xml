@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns:crypto="http://www.mulesoft.org/schema/mule/crypto"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/crypto http://www.mulesoft.org/schema/mule/crypto/current/mule-crypto.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<sub-flow name="GetToken" doc:id="0d74e842-b403-4248-aab2-742758a81e97" >
+		<json-logger:logger doc:name="cache flow start" doc:id="6095bc47-74a3-4ef3-aef8-207055b0810a" config-ref="JSON_Logger_Config" message="start cache flow" tracePoint="FLOW">
+			<json-logger:content ><![CDATA[content]]></json-logger:content>
+		</json-logger:logger>
+		<os:retrieve doc:name="Retrieve existing token" doc:id="1e5b58dc-16c0-4289-8beb-6a4a51f92a6e" key="hashedToken" objectStore="Object_store" target="hashedToken">
+			<os:default-value><![CDATA[empty]]></os:default-value>
+		</os:retrieve>
+		<choice doc:name="token exists ?" doc:id="24076ba6-e559-4f93-85f5-8a8886015455" >
+			<when expression="#[vars.hashedToken == 'empty']" >
+				<ee:transform doc:name="token details" doc:id="08fbab79-3fd9-4d59-bc63-516e8273ce35">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "grant_type": "client_credentials",
+  "client_id": "OIyTPWNuC6sL61CDwJ3vb6birF15gIGv",
+  "client_secret": "dZc4abRFuR6G3Yhyn6lBVo_PNOU7zmnEnbssqDrBxlYsRSWlXQyw8anqffmnfSlm",
+   "audience": "api://api.spscommerce.com/"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+				<json-logger:logger doc:name="token not found" doc:id="98457853-4d95-4128-a0bf-6bde5dbc7395" config-ref="JSON_Logger_Config" message="Token Not Found. Fetching new token" tracePoint="BEFORE_REQUEST" />
+				<http:request method="${sps.auth.method}" doc:name="Get Token" doc:id="56226e96-2fb7-49b4-93a1-600c9c1ebadb" config-ref="HTTP_Request_configuration_SPS_Auth" path="${sps.auth.path}" target="token" targetValue="#[payload.access_token]" />
+				<json-logger:logger doc:name="After SPS Auth call" doc:id="49925605-6b1f-4fbd-a787-9f516804d271" config-ref="JSON_Logger_Config" message="Recieved new token" tracePoint="AFTER_REQUEST"/>
+				<crypto:jce-encrypt-pbe doc:name="Jce encrypt pbe" doc:id="cc154092-449c-4c52-a616-6e85251e8b82" password="Mule::p('secure::hash.key')" target="hashedToken" algorithm="#[Mule::p('hash.algorithm')]">
+					<crypto:content ><![CDATA[#[vars.token]]]></crypto:content>
+				</crypto:jce-encrypt-pbe>
+				<os:store doc:name="store token in object store" doc:id="91ecf46b-4e2d-4f44-8c42-1042fbff74d4" key="hashedToken" objectStore="Object_store" >
+					<os:value ><![CDATA[#[vars.hashedToken]]]></os:value>
+				</os:store>
+			</when>
+			<otherwise>
+				<json-logger:logger doc:name="token found" doc:id="e72f9096-7133-4c5f-bf33-0adefbb5e5fe" config-ref="JSON_Logger_Config" message="existing token found" tracePoint="FLOW">
+					<json-logger:content ><![CDATA[content]]></json-logger:content>
+				</json-logger:logger>
+				<crypto:jce-decrypt-pbe doc:name="Jce decrypt pbe" doc:id="57318d63-d24f-41d7-ab82-9bf22da7a64f" password="Mule::p('secure::hash.key')" target="token" outputMimeType="application/json" algorithm="#[Mule::p('hash.algorithm')]">
+					<crypto:content ><![CDATA[#[vars.hashedToken]]]></crypto:content>
+				</crypto:jce-decrypt-pbe>
+			</otherwise>
+		</choice>
+		<json-logger:logger doc:name="cache flow end" doc:id="d2951a5d-bb8b-4757-add4-cf25a35d7d3b" config-ref="JSON_Logger_Config" message="end cache flow" tracePoint="FLOW"/>
+	</sub-flow>
+</mule>
