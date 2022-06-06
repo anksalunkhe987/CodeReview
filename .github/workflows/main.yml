@@ -29,8 +29,9 @@ jobs:
           project_name=$(echo "${{ steps.changed-files.outputs.all_modified_files }}" | cut -d '/' -f 1 | xargs)
           echo "::set-output name=projectName::$project_name"
       
-      - name: Code reiew
+      - name: Code reiew of main Mule XML
+        if: ${{ contains(${{ steps.changed-files.outputs.all_modified_files }}, '/src/main/mule/') }}
         uses: ./codeReview/ # Uses an action in the root directory
-        id: review
+        id: reviewMainXML
         with : 
           xml-file : ${{ steps.project-name.outputs.projectName }}/src/main/mule/*.xml
