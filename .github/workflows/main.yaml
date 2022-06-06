@@ -19,6 +19,6 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: review
         with:
-          xml-file: test.xml
-          xml-schema-file: mule-schema.sch
+          xml-file: /sumup-purchase-orders-sps-sapi/src/main/mule/sumup-purchase-orders-sps-sapi.xml
+          xml-schema-file: /.github/workflows/mule-flow.sch
           xml-schema-type: schematron
