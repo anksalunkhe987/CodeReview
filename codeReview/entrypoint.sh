@@ -1,3 +1,3 @@
 #!/bin/sh -l
 
-xmllint $1 --$2 $3 --noout
+xmllint ./sumup-purchase-orders-sps-sapi/pom.xml
