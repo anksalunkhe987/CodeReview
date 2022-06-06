@@ -15,6 +15,6 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.xml-file }}
+    - sumup-purchase-orders-sps-sapi/src/main/mule/sumup-purchase-orders-sps-sapi.xml
     - ${{ inputs.xml-schema-type }}
     - ${{ inputs.xml-schema-file }}
