@@ -20,5 +20,5 @@ jobs:
         id: review
         with:
           xml-file: test.xml
-          xml-schema-file: mule-schema.sch
+          xml-schema-file: .github/workflows/mule-flow.sch
           xml-schema-type: schematron
