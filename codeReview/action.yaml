@@ -1,8 +1,11 @@
-name: 'XML Lint'
-description: 'Lint XML files with xmllint'
+name: 'Code review'
+description: 'Run xmllint against schematron files'
 inputs:
   xml-file:
     description: 'The source (.xml) file'
+    required: true
+  xml-schema-file:
+    description: 'The schema file (.xsd or other, according to schema type)'
     required: true
 runs:
   using: 'docker'
@@ -10,4 +13,4 @@ runs:
   args:
     - ${{ inputs.xml-file }}
     - schematron
-    - ./codeReview/mule-flow.sch
+    - ${{ inputs.xml-schema-file }}
