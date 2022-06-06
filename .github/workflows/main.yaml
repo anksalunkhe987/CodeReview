@@ -16,5 +16,5 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Code review
-        uses: codeReview@v1 # Uses an action in the root directory
+        uses: docker://Dockerfile # Uses an action in the root directory
         id: codereview
