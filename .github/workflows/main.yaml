@@ -16,6 +16,4 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Code review
-        working-directory: codeReview
-        id: codereview
-        run : docker build . --file Dockerfile --tag myreview
+        uses: actions/codeReview@v1
