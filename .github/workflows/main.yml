@@ -30,7 +30,7 @@ jobs:
           echo "::set-output name=projectName::$project_name"
           
       - name: Code reiew of Gloabl Config Mule XML
-        if: contains('hello', 'ell')
+        if: contains('hello', 'elli')
         uses: ./codeReview/
         id: reviewGloablConfigXML
         with : 
