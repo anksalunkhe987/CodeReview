@@ -32,8 +32,14 @@ jobs:
       - name: Get files to do code review
         id: code-review-files
         run: |
-          awk
-          globals_config=$(echo "${{ steps.changed-files.outputs.all_modified_files }}" | cut -d ',' -f 1 | xargs)
+          variable="${{ steps.changed-files.outputs.all_modified_files }}"
+          for i in ${variable//,/ }
+          do
+          if [[ $i == *'/globals/config.xml'* ]]
+          then echo "def is config"
+          fi
+          done
+          #globals_config=$(echo "${{ steps.changed-files.outputs.all_modified_files }}" | cut -d ',' -f 1 | xargs)
           echo "::set-output name=globalsConfig::$globals_config"
           
       - name: Code review of Global Config Mule XML
