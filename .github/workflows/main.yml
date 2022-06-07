@@ -22,7 +22,8 @@ jobs:
           for i in ${variable//,/ }
           do
           if [[ $i == *'/globals/config.xml'* ]]
-          then echo "::set-output name=globalsConfig::$i"
+          then echo "::set-output name=globalsConfigMuleFiles::$i"
+          else echo "::set-output name=muleFiles::$i"
           fi
           done
                   
@@ -31,5 +32,13 @@ jobs:
         uses: ./codeReview/
         id: reviewGloablConfigXML
         with : 
-          xml-file : ${{ steps.code-review-files.outputs.globalsConfig }}
+          xml-file : ${{ steps.code-review-files.outputs.globalsConfigMuleFiles }}
           xml-schema-file : ./codeReview/mule-globals-config.sch
+     
+      - name: Code review of Other Mule XML
+        #if: contains(steps.changed-files.outputs.all_modified_files, '/globals/config.xml')
+        uses: ./codeReview/
+        id: reviewMuleXML
+        with : 
+          xml-file : ${{ steps.code-review-files.outputs.muleFiles }}
+          xml-schema-file : ./codeReview/mule-flow.sch
