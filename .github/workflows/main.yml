@@ -32,7 +32,7 @@ jobs:
       - name: Get files to do code review
         id: code-review-files
         run: |
-          globals-config=$(echo "${{ steps.changed-files.outputs.all_modified_files }}" | cut -d '/' -f 1 | xargs)
+          globals-config=$(echo "${{ steps.changed-files.outputs.all_modified_files }}" | cut -d ',' -f 1 | xargs)
           echo "::set-output name=globals-config::$globals-config"
           
       - name: Code review of Global Config Mule XML
@@ -40,5 +40,5 @@ jobs:
         uses: ./codeReview/
         id: reviewGloablConfigXML
         with : 
-          xml-file : ${{ steps.changed-files.outputs.all_modified_files }}
+          xml-file : ${{ steps.code-review-files.outputs.globals-config }}
           xml-schema-file : ./codeReview/mule-globals-config.sch
