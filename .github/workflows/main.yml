@@ -30,7 +30,7 @@ jobs:
           echo "::set-output name=projectName::$project_name"
           
       - name: Code reiew of Gloabl Config Mule XML
-        if: contains(${{ steps.changed-files.outputs.all_modified_files }}, 'globals')
+        if: contains('sumup-purchase-orders-sps-sapi/src/main/mule/sumup-purchase-orders-sps-sapi.xml', 'globals')
         uses: ./codeReview/
         id: reviewGloablConfigXML
         with : 
