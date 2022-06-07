@@ -28,10 +28,11 @@ jobs:
         run: |
           project_name=$(echo "${{ steps.changed-files.outputs.all_modified_files }}" | cut -d '/' -f 1 | xargs)
           echo "::set-output name=projectName::$project_name"
+          
       - name: Get files to do code review
         id: code-review-files
         run: |
-          variable='sumup-purchase-orders-sps-sapi/src/main/mule/globals/config.xml,sumup-purchase-orders-sps-sapi/src/main/mule/globals/globalErrorHandler.xml'
+          variable='${{ steps.changed-files.outputs.all_modified_files }}'
           for i in ${variable//,/ }
           do
           if [[ $i == *'/globals/config.xml'* ]]
