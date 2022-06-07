@@ -9,6 +9,6 @@ inputs:
     required: true
 runs:
   using: 'composite'
-   steps:
+  steps:
     - run: echo "Hi"
       shell: bash
