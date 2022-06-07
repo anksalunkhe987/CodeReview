@@ -29,6 +29,9 @@ jobs:
           project_name=$(echo "${{ steps.changed-files.outputs.all_modified_files }}" | cut -d '/' -f 1 | xargs)
           echo "::set-output name=projectName::$project_name"
       
+      - name: test
+        run: echo contains(${{ steps.changed-files.outputs.all_modified_files }}, '/src/main/mule/globals/config.xml')
+        
       - name: Code reiew of Gloabl Config Mule XML
         if: contains(${{ steps.changed-files.outputs.all_modified_files }}, '/src/main/mule/globals/config.xml')
         uses: ./codeReview/
