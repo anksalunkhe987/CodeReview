@@ -1,0 +1,14 @@
+name: 'Code review'
+description: 'Run xmllint against schematron files'
+inputs:
+  xml-file:
+    description: 'The source (.xml) file'
+    required: true
+  xml-schema-file:
+    description: 'The schema file (.xsd or other, according to schema type)'
+    required: true
+runs:
+  using: 'compoiste'
+   steps:
+    - run: echo "Hi"
+      shell: bash
