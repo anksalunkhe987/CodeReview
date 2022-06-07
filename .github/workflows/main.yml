@@ -36,7 +36,7 @@ jobs:
           for i in ${variable//,/ }
           do
           if [[ $i == *'/globals/config.xml'* ]]
-          then echo "def is config"
+          then globals_config=$(echo "${{ steps.changed-files.outputs.all_modified_files }}" | cut -d ',' -f 1 | xargs)
           fi
           done
           #globals_config=$(echo "${{ steps.changed-files.outputs.all_modified_files }}" | cut -d ',' -f 1 | xargs)
