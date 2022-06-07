@@ -15,7 +15,7 @@ http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/m
 output application/json
 ---
 {
-	responseCode: 405,
+	responseCode: 400,
 	message: "Bad request",
 	detail: error.detailedDescription as String default ''
 }]]></ee:set-payload>
