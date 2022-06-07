@@ -27,7 +27,7 @@ jobs:
           done
                   
       - name: Code review of Global Config Mule XML
-        if: contains(steps.changed-files.outputs.all_modified_files, '/globals/config.xml')
+        #if: contains(steps.changed-files.outputs.all_modified_files, '/globals/config.xml')
         uses: ./codeReview/
         id: reviewGloablConfigXML
         with : 
