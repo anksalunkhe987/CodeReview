@@ -28,8 +28,14 @@ jobs:
         run: |
           project_name=$(echo "${{ steps.changed-files.outputs.all_modified_files }}" | cut -d '/' -f 1 | xargs)
           echo "::set-output name=projectName::$project_name"
+      
+      - name: Get files to do code review
+        id: code-review-files
+        run: |
+          globals-config=$(echo "${{ steps.changed-files.outputs.all_modified_files }}" | cut -d '/' -f 1 | xargs)
+          echo "::set-output name=globals-config::$globals-config"
           
-      - name: Code reiew of Gloabl Config Mule XML
+      - name: Code review of Global Config Mule XML
         if: contains(steps.changed-files.outputs.all_modified_files, '/globals/config.xml')
         uses: ./codeReview/
         id: reviewGloablConfigXML
