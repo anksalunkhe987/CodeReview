@@ -8,7 +8,7 @@ http://www.mulesoft.org/schema/mule/crypto http://www.mulesoft.org/schema/mule/c
 		<secure-properties:encrypt algorithm="Blowfish" />
     </secure-properties:config>
     <http:listener-config name="sumup-salesforce-sapi-httpListenerConfig">
-        <http:listener-connection host="${https.listen.host}" port="${https.listen.port}" protocol="HTTPS" connectionIdleTimeout="300000">
+        <http:listener-connection host="${https.listen.host}" port="${https.listen.port}" protocol="HTTPS" connectionIdleTimeout="200000">
             <tls:context>
                 <tls:trust-store insecure="true" />
                 <tls:key-store type="pkcs12" path="${https.keystore.path}" keyPassword="${secure::https.keystore.password}" password="${secure::https.keystore.password}" />
