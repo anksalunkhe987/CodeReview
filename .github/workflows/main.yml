@@ -32,6 +32,7 @@ jobs:
       - name: Get files to do code review
         id: code-review-files
         run: |
+          awk
           globals_config=$(echo "${{ steps.changed-files.outputs.all_modified_files }}" | cut -d ',' -f 1 | xargs)
           echo "::set-output name=globalsConfig::$globals_config"
           
