@@ -36,11 +36,10 @@ jobs:
           for i in ${variable//,/ }
           do
           if [[ $i == *'/globals/config.xml'* ]]
-          then globals_config=$(echo "${{ steps.changed-files.outputs.all_modified_files }}" | cut -d ',' -f 1 | xargs)
+          then globals_config_file= $i
           fi
           done
-          #globals_config=$(echo "${{ steps.changed-files.outputs.all_modified_files }}" | cut -d ',' -f 1 | xargs)
-          echo "::set-output name=globalsConfig::$globals_config"
+          echo "::set-output name=globalsConfig::$globals_config_file"
           
       - name: Code review of Global Config Mule XML
         if: contains(steps.changed-files.outputs.all_modified_files, '/globals/config.xml')
