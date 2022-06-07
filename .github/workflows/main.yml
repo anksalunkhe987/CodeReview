@@ -30,7 +30,7 @@ jobs:
           echo "::set-output name=projectName::$project_name"
       
       - name: test
-        run: echo contains(${{ steps.changed-files.outputs.all_modified_files }}, '/src/main/mule/globals/config.xml')
+        run: echo contains('test', 'es')
         
       - name: Code reiew of Gloabl Config Mule XML
         if: contains(${{ steps.changed-files.outputs.all_modified_files }}, '/src/main/mule/globals/config.xml')
