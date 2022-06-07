@@ -8,6 +8,10 @@ inputs:
     description: 'The schema file (.xsd or other, according to schema type)'
     required: true
 runs:
+  using: 'composite'
+  steps:
+      - run: echo "Hi"
+runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
